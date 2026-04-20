@@ -1,14 +1,18 @@
 from core.manager import AttackManager
+from core.scanner import detect_services
 
 def main():
     print("=== GhostHydra ===")
 
     target = input("Target IP: ")
-    service = input("Service (ssh/ftp/http): ")
     username = input("Username: ")
 
-    manager = AttackManager(target, service, username)
-    manager.run()
+    services = detect_services(target)
+    print(f"[+] Servicios detectados: {services}")
+
+    for service in services:
+        manager = AttackManager(target, service, username)
+        manager.run()
 
 if __name__ == "__main__":
     main()
