@@ -1,2 +1,2 @@
-# GhostHydra
-Advanced modular password auditing tool designed for ethical hacking and security testing. Combines intelligent attack strategies, service detection, and stealth techniques to perform efficient and adaptable authentication testing across multiple protocols.
+GhostHydra is a modular password auditing framework designed for ethical hacking and controlled environments.
+Built entirely from GitHub, it focuses on extensibility, stealth techniques, and intelligent attack simulations.
