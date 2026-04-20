@@ -1,26 +1,40 @@
-from core.engine import run_threads
+import asyncio
+from core.async_engine import run_async
 from core.wordlist import generate_wordlist
+from core.scoring import sort_by_score
 from core.stealth import random_delay
-from core.utils import save_result
+from core.proxy import get_proxy
+from core.db import save_entry
 
 def attack(target, username):
-    print(f"[+] Ataque SSH en {target}")
+    print(f"[+] Async SSH attack en {target}")
 
     passwords = generate_wordlist(username)
+    passwords = sort_by_score(passwords, username)
+
     found = {"status": False}
 
-    def worker(pwd):
+    async def worker(pwd):
         if found["status"]:
             return
 
+        await asyncio.sleep(0)  # yield control
         random_delay()
 
-        print(f"[*] Probando {pwd}")
+        proxy = get_proxy()
+        print(f"[*] {pwd} via {proxy}")
 
-        # Simulación controlada
+        # Simulación segura
         if pwd == username + "123":
             print(f"[SUCCESS] {pwd}")
-            save_result(target, "ssh", username, pwd)
+
+            save_entry({
+                "target": target,
+                "service": "ssh",
+                "username": username,
+                "password": pwd
+            })
+
             found["status"] = True
 
-    run_threads(passwords, worker, threads=5)
+    asyncio.run(run_async(passwords, worker, limit=10))
