@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GhostHydra Dashboard</title>
+</head>
+<body>
+    <h1>Resultados</h1>
+
+    <table border="1">
+        <tr>
+            <th>Target</th>
+            <th>Service</th>
+            <th>User</th>
+            <th>Password</th>
+        </tr>
+
+        {% for entry in data %}
+        <tr>
+            <td>{{ entry.target }}</td>
+            <td>{{ entry.service }}</td>
+            <td>{{ entry.username }}</td>
+            <td>{{ entry.password }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
